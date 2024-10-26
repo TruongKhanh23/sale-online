@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: Deploy to Vercel with Automatic Versioning
 
 on:
   push:
@@ -25,6 +25,32 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Read current version
+        id: get_version
+        run: |
+          version=$(cat VERSION.txt)
+          echo "Current version: $version"
+          echo "version=$version" >> $GITHUB_ENV
+
+      - name: Bump Patch version
+        id: bump_version
+        run: |
+          version=${{ env.version }}
+          IFS='.' read -r major minor patch <<< "$version"
+          patch=$((patch + 1))
+          new_version="$major.$minor.$patch"
+          echo "New version: $new_version"
+          echo "$new_version" > VERSION.txt
+          echo "new_version=$new_version" >> $GITHUB_ENV
+
+      - name: Commit new version
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add VERSION.txt
+          git commit -m "Bump version to ${{ env.new_version }}"
+          git push
+
       - name: Deploy to Vercel (Production)
         if: github.ref == 'refs/heads/main'
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
@@ -32,3 +58,15 @@ jobs:
       - name: Deploy to Vercel (Preview)
         if: github.ref != 'refs/heads/main'
         run: npx vercel --token ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/main'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: '${{ env.new_version }}'
+          release_name: 'Release v${{ env.new_version }}'
+          body: 'Automatic release for deployment to production'
+          draft: false
+          prerelease: false
