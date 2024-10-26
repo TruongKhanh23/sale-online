@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-      - '**'
+      - '**' # Bao gồm tất cả các nhánh khác
+  release:
+    types: [published] # Kích hoạt khi có release được publish
 
 jobs:
   deploy:
@@ -26,9 +28,9 @@ jobs:
         run: npm run build
 
       - name: Deploy to Vercel (Production)
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'release'
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Vercel (Preview)
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/main' || github.event_name == 'push'
         run: npx vercel --token ${{ secrets.VERCEL_TOKEN }}
