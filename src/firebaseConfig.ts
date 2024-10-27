@@ -1,6 +1,7 @@
 // firebaseConfig.ts
 
 import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
 import urlHostToConfigsMap from './urlHostToConfigsMap'
 
 type FirebaseConfig = {
@@ -21,6 +22,7 @@ const firebaseConfig: FirebaseConfig =
 
 // Khởi tạo Firebase
 const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
 
 // Xuất app và config
-export { app, firebaseConfig }
+export { app, db, firebaseConfig }
