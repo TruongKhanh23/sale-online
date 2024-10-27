@@ -6,7 +6,10 @@ on:
       - main
       - '**' # Bao gồm tất cả các nhánh khác
   release:
-    types: [published] # Kích hoạt khi có release được publish
+    types:
+      - published # Kích hoạt khi release mới được publish
+      - edited # Kích hoạt khi release được chỉnh sửa
+      - rerequested # Kích hoạt khi re-request lại release
 
 jobs:
   deploy:
