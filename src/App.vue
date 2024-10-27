@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
+import SampleFirebase from '@/components/SampleFirebase.vue'
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="Sale Online Website Version 1.0.5!" />
+      <SampleFirebase />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
