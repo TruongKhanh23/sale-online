@@ -14,7 +14,7 @@ import HelloWorld from './components/HelloWorld.vue'
     />
 
     <div class="wrapper">
-      <HelloWorld msg="Sale Online Website Version 1.0.3!" />
+      <HelloWorld msg="Sale Online Website Version 1.0.4!" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
