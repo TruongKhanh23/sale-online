@@ -16,4 +16,11 @@ export default [
   ...pluginVue.configs['flat/essential'],
   ...vueTsEslintConfig(),
   skipFormatting,
+
+  // Thêm phần cấu hình quy tắc ở đây
+  {
+    rules: {
+      'vue/block-lang': 'off', // Bỏ qua lỗi liên quan đến thuộc tính lang
+    },
+  },
 ]
