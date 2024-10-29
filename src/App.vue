@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
 import SampleFirebase from '@/components/SampleFirebase.vue'
+import SampleContentful from './components/SampleContentful.vue'
 </script>
 
 <template>
@@ -17,6 +18,7 @@ import SampleFirebase from '@/components/SampleFirebase.vue'
     <div class="wrapper">
       <HelloWorld msg="Sale Online Website Version 1.0.5!" />
       <SampleFirebase />
+      <SampleContentful />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
