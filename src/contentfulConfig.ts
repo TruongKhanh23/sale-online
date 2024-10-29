@@ -5,7 +5,9 @@ import urlHostToContentfulConfigsMap from './urlHostToContentfulConfigsMap'
 
 const currentHost = window.location.hostname // Lấy hostname hiện tại
 
-const contentfulConfig = urlHostToContentfulConfigsMap[currentHost]
+const contentfulConfig =
+  urlHostToContentfulConfigsMap[currentHost] ||
+  urlHostToContentfulConfigsMap['localhost']
 
 if (!contentfulConfig) {
   throw new Error(`Contentful configuration not found for host: ${currentHost}`)
